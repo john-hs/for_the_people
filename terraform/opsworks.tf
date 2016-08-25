@@ -90,14 +90,11 @@ resource "aws_opsworks_application" "for-the-people-app" {
   short_name  = "ftp-app"
   stack_id    = "${aws_opsworks_stack.for-the-people-stack.id}"
   type        = "static"
-
   app_source = {
     type     = "git"
     revision = "master"
     url      = "https://github.com/john-hs/for_the_people.git"
   }
-
-  document_root = "public"
 }
 
 
