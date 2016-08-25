@@ -29,7 +29,7 @@ resource "aws_iam_role" "for-the-people-opsworks-ec2" {
     {
       "Effect": "Allow",
       "Principal": {
-        "Service": "ec2.amazonaws.com"
+        "AWS": "*"
       },
       "Action": "sts:AssumeRole"
     }
@@ -39,23 +39,28 @@ EOF
 }
 
 resource "aws_iam_role_policy" "for-the-people-opsworks-service" {
-  name = "opsworks-service"
+  name = "for-the-people-opsworks-service"
   role = "${aws_iam_role.for-the-people-opsworks-service.id}"
 
   policy = <<EOF
 {
-  "Statement": [
-    {
-      "Action": ["ec2:*", "iam:PassRole",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:*",
+                "iam:PassRole",
                 "cloudwatch:GetMetricStatistics",
                 "cloudwatch:DescribeAlarms",
                 "ecs:*",
                 "elasticloadbalancing:*",
-                "rds:*"],
-      "Effect": "Allow",
-      "Resource": ["*"]
-    }
-  ]
+                "rds:*"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
 }
 EOF
 }
